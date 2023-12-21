@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>メモ</title>
+		<link rel="stylesheet" href="/css/reset.css">
+		<link rel="stylesheet" href="/css/login.css">
+	</head>
+	<body>
+		<form name="login_form" action="/login" method="POST">
+			<div class="login_form_top">
+				<h1>LOGIN</h1>
+			</div>
+			<div class="login_form_btm">
+				<input type="id" name="username" placeholder="Username">
+				{% if error_user %}
+					<div style="color: red;">
+						ユーザー名が短すぎます。
+					</div>
+				{% endif %}
+				{% if error_unique %}
+					<div style="color: red;">
+						指定したユーザ名は存在しません。
+					</div>
+				{% endif %}
+				<input type="password" name="password" placeholder="Password">
+				{% if error_password %}
+					<div style="color: red;">
+						パスワードは必須です。
+					</div>
+				{% endif %}
+				<div>
+				{% if error_login %}
+					<div style="color: red;">
+						ユーザー名またはパスワードが違います。
+					</div>
+				{% endif %}
+				</div>
+				<input type="submit" name="botton" value="LOGIN">
+			</div>
+			<div class="register">
+				<a href="./register">新規登録</a>
+			</div>
+		</form>
+
+	</body>
+</html>

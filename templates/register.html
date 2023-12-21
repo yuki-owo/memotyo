@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>メモ</title>
+		<link rel="stylesheet" href="/css/reset.css">
+	</head>
+	<body>
+		<section class="section">
+			<div class="container">
+				<form action="/register" method="POST">
+					<div>
+						<input type="text" name="username" placeholder="ユーザー名">
+						{% if error_user %}
+							<div style="color: red;">
+								ユーザー名が短すぎます。
+							</div>
+						{% endif %}
+						{% if error_unique %}
+							<div style="color: red;">
+								指定したユーザ名はすでに登録されています。
+							</div>
+						{% endif %}
+					</div>
+					<div>
+						<input type="password" name="password" placeholder="パスワード">
+						{% if error_password %}
+							<div style="color: red;">
+								パスワードは必須です。
+							</div>
+						{% endif %}
+					</div>
+					<div>
+						<input type="password" name="confirm" placeholder="パスワード確認">
+						{% if error_confirm %}
+							<div style="color: red;">
+								パスワードとパスワード確認が異なります。
+							</div>
+						{% endif %}
+					</div>
+					<div>
+						<input type="submit" value="登録">
+					</div>
+				</form>
+			</div>
+		</section>
+	</body>
+</html>

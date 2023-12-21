@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>メモ</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<script>
+		(function(d) {
+			var config = {
+				kitId: 'eqt8zts',
+					scriptTimeout: 3000,
+					async: true
+				},
+				h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+			})(document);
+	</script>
+</head>
+
+<body>
+	<div class="header">
+		<h1 class="title">メモ帳</h1>
+		<span class="username">user : {{ username }}</span>
+		<a class="logout" href="/logout">ログアウト</a>
+	</div>
+	<div class="folders">
+		<ul>
+			{% for folder in folders %}
+			<li>
+				<form method="POST" action="/open_folder">
+					<input type="hidden" name="folder_id" value="{{folder['id']}}">
+					<input class="folder_sub" type="submit" value="{{ folder['name'] }}" >
+				</form>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="selected_folder">
+		{% for sf in select_folder %}
+		<div class="selected_folder-name">
+			<p><span>選択中のフォルダ : </span>{{ sf['name'] }}</p>
+		</div>
+		<div class="selected_folder-delete">
+			<form method="POST" action="/delete_folder">
+				<input type="hidden" name="folder_id" value="{{sf['id']}}"">
+				<input type="submit" value="削除">
+			</form>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="make_smth">
+		<div class="input_memo">
+			<p>メモを作成</p>
+			<form method="POST" action="/">
+				<input class="title_text" type="text" name="title" placeholder="タイトル" required>
+				<label for="content"></label>
+				<textarea name="contents" id="content" placeholder="内容"></textarea>
+				<input class="memo_sub" type="submit" value="作成">
+			</form>
+		</div>
+		<div class="make_folder">
+			<form method="POST" action="/folder">
+				<input type="input" name="folder_name" placeholder="フォルダー名">
+				<input type="submit" value="フォルダー作成">
+			</form>
+		</div>
+	</div>
+	<div class="memo">
+		<ul class="memo_area">
+			{% for memo in memos %}
+			<li>
+				<div class="memo-name">
+					<strong>{{ memo['title'] }}</strong><span>作成日{{ memo['update_date'] }}</span>
+				</div>
+				<form class="delete_memo" method="POST" action="/delete">
+					<input type="hidden" name="memo_id" value="{{ memo['id'] }}">
+					<input type="submit" value="削除">
+				</form>
+				<div class="memo-content">
+					<p>{{ memo['contents'] }}</p>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</body>
+
+</html>
